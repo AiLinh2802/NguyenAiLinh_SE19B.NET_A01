@@ -1,0 +1,122 @@
+﻿@using NguyenAiLinhMVC.ViewModels
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-1">@Model.Role Dashboard</h2>
+        <p class="text-muted mb-0">Welcome, @Model.AccountName</p>
+    </div>
+</div>
+
+@if (Model.Role == "Admin")
+{
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Total Accounts</div>
+                    <div class="display-6 fw-semibold">@Model.TotalAccounts</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Total Categories</div>
+                    <div class="display-6 fw-semibold">@Model.TotalCategories</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Total News</div>
+                    <div class="display-6 fw-semibold">@Model.TotalNewsArticles</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Active News</div>
+                    <div class="display-6 fw-semibold">@Model.TotalActiveNewsArticles</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (Model.Role == "Staff")
+{
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">My News Articles</div>
+                    <div class="display-6 fw-semibold">@Model.MyTotalNewsArticles</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">My Active News</div>
+                    <div class="display-6 fw-semibold">@Model.MyActiveNewsArticles</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">My Inactive News</div>
+                    <div class="display-6 fw-semibold">@Model.MyInactiveNewsArticles</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Latest 5 News Articles</h5>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var article in Model.LatestNewsArticles)
+                {
+                    <tr>
+                        <td>@article.NewsArticleId</td>
+                        <td>@article.NewsTitle</td>
+                        <td>@article.CategoryName</td>
+                        <td>@article.CreatedByName</td>
+                        <td>
+                            <span class="badge @(article.NewsStatus ? "bg-success" : "bg-secondary")">
+                                @(article.NewsStatus ? "Active" : "Inactive")
+                            </span>
+                        </td>
+                        <td>@article.CreatedDate?.ToString("yyyy-MM-dd HH:mm")</td>
+                    </tr>
+                }
+                @if (!Model.LatestNewsArticles.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">No news articles found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

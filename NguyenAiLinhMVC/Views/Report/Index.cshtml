@@ -1,0 +1,61 @@
+﻿@using NguyenAiLinhMVC.ViewModels
+@model ReportFilterViewModel
+@{
+    ViewData["Title"] = "Statistic Report";
+}
+
+<h2 class="mb-3">Statistic Report</h2>
+
+<form method="get" class="row g-3 align-items-end mb-4">
+    <div class="col-md-3">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input asp-for="StartDate" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="EndDate" class="form-label"></label>
+        <input asp-for="EndDate" class="form-control" />
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary">Generate Report</button>
+    </div>
+</form>
+
+@if (Model.StartDate.HasValue && Model.EndDate.HasValue && Model.StartDate > Model.EndDate)
+{
+    <div class="alert alert-danger">Start date must be earlier than or equal to end date.</div>
+}
+
+@if (Model.Items.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Created By</th>
+                    <th>Created Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.NewsArticleId</td>
+                        <td>@item.NewsTitle</td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.CreatedByName</td>
+                        <td>@item.CreatedDate?.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>@(item.NewsStatus ? "Active" : "Inactive")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (Model.StartDate.HasValue && Model.EndDate.HasValue)
+{
+    <div class="alert alert-light border">No data found in this period.</div>
+}

@@ -1,0 +1,34 @@
+﻿@using FUNewsManagement.BLL.Dtos
+@model IReadOnlyList<NewsArticleDto>
+@{
+    ViewData["Title"] = "Public News";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Public News</h2>
+    <form method="get" class="d-flex gap-2">
+        <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Search news" />
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+    </form>
+</div>
+
+<div class="row g-3">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">@item.NewsTitle</h5>
+                    <p class="card-text text-muted small mb-2">@item.CategoryName | @item.CreatedDate?.ToString("yyyy-MM-dd")</p>
+                    <p class="card-text">@item.Headline</p>
+                    <a class="btn btn-sm btn-primary" asp-action="NewsDetails" asp-route-id="@item.NewsArticleId">Read More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-light border mt-3">No active news articles found.</div>
+}

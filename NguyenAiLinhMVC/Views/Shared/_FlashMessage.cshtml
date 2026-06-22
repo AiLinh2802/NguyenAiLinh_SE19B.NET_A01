@@ -1,0 +1,13 @@
+﻿@{
+    var message = TempData["Message"] as string;
+    var messageType = TempData["MessageType"] as string ?? "info";
+}
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+    <div class="alert alert-dismissible fade show box-shadow" role="alert"
+         style="background-color: var(--color-frame); color: var(--color-text); border: 1px solid var(--color-text);">
+        @message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="filter: invert(1);"></button>
+    </div>
+}

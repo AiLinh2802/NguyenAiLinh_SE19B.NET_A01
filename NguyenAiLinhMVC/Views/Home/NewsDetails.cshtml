@@ -1,0 +1,17 @@
+﻿@using FUNewsManagement.BLL.Dtos
+@model NewsArticleDto
+@{
+    ViewData["Title"] = "News Details";
+}
+
+<article class="card shadow-sm">
+    <div class="card-body">
+        <h2>@Model.NewsTitle</h2>
+        <p class="text-muted">@Model.CategoryName | @Model.CreatedByName | @Model.CreatedDate?.ToString("yyyy-MM-dd HH:mm")</p>
+        <h5>@Model.Headline</h5>
+        <p class="mt-3">@Model.NewsContent</p>
+        <p><strong>Source:</strong> @Model.NewsSource</p>
+        <p><strong>Tags:</strong> @(Model.TagNames.Any() ? string.Join(", ", Model.TagNames) : "None")</p>
+        <a class="btn btn-outline-secondary" asp-action="PublicNews">Back</a>
+    </div>
+</article>

@@ -1,0 +1,75 @@
+﻿@using NguyenAiLinhMVC.Infrastructure
+@{
+    ViewData["Title"] = "Dashboard";
+    var role = Context.Session.GetString(SessionKeys.UserRole);
+    var accountName = Context.Session.GetString(SessionKeys.AccountName);
+}
+
+<div class="p-4 p-md-5 mb-4 rounded-3 bg-light border">
+    <div class="col-lg-8 px-0">
+        <h1 class="display-6">Welcome, @accountName</h1>
+        <p class="lead mb-3">Role: @role</p>
+        @if (role == "Admin")
+        {
+            <p>Manage accounts and generate report statistics by created date.</p>
+        }
+        else if (role == "Staff")
+        {
+            <p>Manage categories, tags, news articles, your profile, and your created-news history.</p>
+        }
+        else if (role == "Lecturer")
+        {
+            <p>Lecturer accounts can browse active news from the public news page.</p>
+        }
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Public News</h5>
+                <p class="card-text">Browse active news articles published by the system.</p>
+                <a class="btn btn-primary" asp-controller="Home" asp-action="PublicNews">Open Public News</a>
+            </div>
+        </div>
+    </div>
+    @if (role == "Admin")
+    {
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Account Management</h5>
+                    <a class="btn btn-primary" asp-controller="Account" asp-action="Index">Manage Accounts</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Statistic Reports</h5>
+                    <a class="btn btn-primary" asp-controller="Report" asp-action="Index">Open Reports</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (role == "Staff")
+    {
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Category Management</h5>
+                    <a class="btn btn-primary" asp-controller="Category" asp-action="Index">Manage Categories</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">News Management</h5>
+                    <a class="btn btn-primary" asp-controller="News" asp-action="Index">Manage News</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

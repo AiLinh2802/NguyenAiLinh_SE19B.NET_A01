@@ -1,0 +1,111 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+/* ========================================================
+   1. KHAI BÁO BIẾN MÀU TOÀN CỤC (NEAPOLITAN THEME)
+======================================================== */
+:root {
+    --color-vanilla: #fcf7d9;
+    --color-light-pink: #f6d8d6;
+    --color-dark-pink: #f0c5d4;
+    --color-choco: #604734;
+}
+
+/* ========================================================
+   2. CÀI ĐẶT NỀN VÀ BỐ CỤC (FIX LỖI ĐÈ GIAO DIỆN TẬN GỐC)
+======================================================== */
+html {
+    height: 100%;
+}
+
+body {
+    background-color: var(--color-vanilla); /* Phủ nền kem vanilla cho toàn web */
+    color: var(--color-choco); /* Chữ màu nâu */
+    /* Kỹ thuật Flexbox đẩy footer xuống đáy */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+    /* CHỈ ép phần khung chứa nội dung chính ở giữa giãn ra, thêm khoảng cách an toàn 20px ở đáy */
+    body > .container {
+        flex: 1;
+        padding-bottom: 20px;
+    }
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: var(--color-choco) !important;
+    font-weight: bold;
+}
+
+/* Các đường link dạng text */
+a {
+    color: var(--color-dark-pink);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: var(--color-choco);
+    }
+
+/* ========================================================
+   3. CÁC NÚT BẤM (BUTTONS) & MENU
+======================================================== */
+.btn-primary {
+    color: var(--color-choco); /* Đổi chữ thành nâu để nổi trên nền hồng */
+    background-color: var(--color-dark-pink);
+    border-color: var(--color-choco);
+}
+
+    .btn-primary:hover {
+        background-color: var(--color-light-pink);
+        color: var(--color-choco);
+        border-color: var(--color-choco);
+    }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: var(--color-choco);
+    background-color: var(--color-dark-pink);
+    border-color: var(--color-choco);
+}
+
+/* ========================================================
+   4. ĐƯỜNG KẺ & HIỆU ỨNG
+======================================================== */
+.border-top {
+    border-top: 1px solid var(--color-light-pink);
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--color-light-pink);
+}
+
+.box-shadow {
+    /* Chỉnh bóng đổ từ màu đen thành màu nâu nhẹ cho tone-sur-tone */
+    box-shadow: 0 .25rem .75rem rgba(96, 71, 52, 0.15);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* ========================================================
+   5. CHÂN TRANG (FOOTER)
+======================================================== */
+.footer {
+    position: relative !important; /* ĐÒN CHÍ MẠNG: Ép tuyệt đối không được lơ lửng đè UI */
+    width: 100%;
+    height: 60px; /* Chốt cứng chiều cao của footer */
+    line-height: 60px;
+    background-color: var(--color-light-pink) !important; /* Đã sửa lại đúng tên biến nền hồng */
+    color: var(--color-choco); /* Đã sửa lại đúng tên biến chữ nâu */
+
+    margin-top: auto; /* Tự động đẩy footer xuống dưới cùng */
+    z-index: 1000;
+}

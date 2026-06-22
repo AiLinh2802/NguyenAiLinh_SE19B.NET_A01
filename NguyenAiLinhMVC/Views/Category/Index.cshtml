@@ -1,0 +1,119 @@
+﻿@using NguyenAiLinhMVC.ViewModels
+@using FUNewsManagement.BLL.Dtos
+@model IReadOnlyList<CategoryFormViewModel>
+@{
+    ViewData["Title"] = "Category Management";
+    var parents = (IEnumerable<CategoryDto>)ViewBag.ParentOptions;
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Category Management</h2>
+    <div class="d-flex gap-2">
+        <form method="get" class="d-flex gap-2">
+            <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Search category" />
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+        </form>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</button>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Parent</th>
+                <th>Status</th>
+                <th>News Count</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryId</td>
+                    <td>@item.CategoryName</td>
+                    <td>@(item.ParentCategoryName ?? "None")</td>
+                    <td>@(item.IsActive ? "Active" : "Inactive")</td>
+                    <td>@item.NewsCount</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editCategory-@item.CategoryId">Edit</button>
+                        <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Delete this category?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="categoryId" value="@item.CategoryId" />
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="createCategoryModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header"><h5 class="modal-title">Create Category</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body">
+                    <div class="mb-3"><label class="form-label">Name</label><input name="CategoryName" class="form-control" required maxlength="100" /></div>
+                    <div class="mb-3"><label class="form-label">Description</label><textarea name="CategoryDescription" class="form-control" required maxlength="250"></textarea></div>
+                    <div class="mb-3">
+                        <label class="form-label">Parent Category</label>
+                        <select name="ParentCategoryId" class="form-select">
+                            <option value="">None</option>
+                            @foreach (var option in parents)
+                            {
+                                <option value="@option.CategoryId">@option.CategoryName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-check">
+                        <input name="IsActive" value="true" class="form-check-input" type="checkbox" checked />
+                        <input name="IsActive" value="false" type="hidden" />
+                        <label class="form-check-label">Active</label>
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary">Save</button></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@foreach (var item in Model)
+{
+    <div class="modal fade" id="editCategory-@item.CategoryId" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form asp-action="Edit" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="CategoryId" value="@item.CategoryId" />
+                    <div class="modal-header"><h5 class="modal-title">Edit Category</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                    <div class="modal-body">
+                        <div class="mb-3"><label class="form-label">Name</label><input name="CategoryName" class="form-control" value="@item.CategoryName" required maxlength="100" /></div>
+                        <div class="mb-3"><label class="form-label">Description</label><textarea name="CategoryDescription" class="form-control" required maxlength="250">@item.CategoryDescription</textarea></div>
+                        <div class="mb-3">
+                            <label class="form-label">Parent Category</label>
+                            <select name="ParentCategoryId" class="form-select">
+                                <option value="">None</option>
+                                @foreach (var option in parents.Where(p => p.CategoryId != item.CategoryId))
+                                {
+                                    <option value="@option.CategoryId" selected="@(option.CategoryId == item.ParentCategoryId)">@option.CategoryName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-check">
+                            <input name="IsActive" value="true" class="form-check-input" type="checkbox" checked="@item.IsActive" />
+                            <input name="IsActive" value="false" type="hidden" />
+                            <label class="form-check-label">Active</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary">Update</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+}

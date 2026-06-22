@@ -1,0 +1,43 @@
+﻿@using NguyenAiLinhMVC.ViewModels
+@model ProfileFormViewModel
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header"><h4 class="mb-0">My Profile</h4></div>
+            <div class="card-body">
+                <form asp-action="Update" method="post">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="AccountId" type="hidden" />
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <input class="form-control" value="@Model.RoleName" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="AccountName" class="form-label"></label>
+                        <input asp-for="AccountName" class="form-control" />
+                        <span asp-validation-for="AccountName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="AccountEmail" class="form-label"></label>
+                        <input asp-for="AccountEmail" class="form-control" />
+                        <span asp-validation-for="AccountEmail" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="AccountPassword" class="form-label">New Password</label>
+                        <input asp-for="AccountPassword" class="form-control" />
+                        <span asp-validation-for="AccountPassword" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,84 @@
+﻿/* ========================================================
+   KHAI BÁO BIẾN MÀU THEO YÊU CẦU MỚI
+======================================================== */
+:root {
+    --color-bg: #fcf7d9; /* Màu nền tổng thể */
+    --color-frame: #f6d8d6; /* Màu các khung, thành phần khác */
+    --color-text: #ffffff; /* Màu chữ trắng */
+}
+
+/* ========================================================
+   CÀI ĐẶT NỀN VÀ FONT CHỮ CƠ BẢN
+======================================================== */
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: var(--color-text) !important;
+    font-weight: bold;
+}
+
+/* Các đường link dạng text */
+a {
+    color: var(--color-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #f2f2f2; /* Trắng xám khi di chuột qua */
+    }
+
+/* ========================================================
+   CÁC NÚT BẤM (BUTTONS) & MENU
+======================================================== */
+.btn-primary {
+    color: var(--color-text);
+    background-color: var(--color-frame);
+    border-color: var(--color-text);
+}
+
+    .btn-primary:hover {
+        background-color: var(--color-bg);
+        color: var(--color-text);
+        border-color: var(--color-text);
+    }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: var(--color-text);
+    background-color: var(--color-frame);
+    border-color: var(--color-text);
+}
+
+/* ========================================================
+   ĐƯỜNG KẺ & HIỆU ỨNG
+======================================================== */
+.border-top {
+    border-top: 1px solid var(--color-text);
+}
+
+.border-bottom {
+    border-bottom: 1px solid var(--color-text);
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================================
+   CHÂN TRANG (FOOTER)
+======================================================== */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background-color: var(--color-frame);
+    color: var(--color-text);
+}
